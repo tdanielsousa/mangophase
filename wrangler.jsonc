@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "mangophase",
+  "compatibility_date": "2026-09-11",
+  "routes": [
+    { "pattern": "mangophasestudio.com", "custom_domain": true },
+    { "pattern": "www.mangophasestudio.com", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "."
+  }
+}
