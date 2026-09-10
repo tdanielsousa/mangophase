@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mango Phase Studio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="ambient-glow"></div>
+
+    <!-- Shared gradient definition for every falling mini-mango, defined once so it
+         isn't re-parsed/re-created per spawn and so we never emit duplicate DOM ids. -->
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="miniGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f43f5e" />
+          <stop offset="60%" stop-color="#eab308" />
+          <stop offset="100%" stop-color="#a3e635" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <header>
+      <div class="brand-logo">Mango Phase Studio</div>
+      <div class="header-status" id="phase-readout">Phase // 50%</div>
+    </header>
+
+    <main>
+      <div class="hero-text-container">
+        <h1 class="hero-title">MANGO<br />PHASE<br />STUDIO</h1>
+        <div class="coming-soon-wrapper">
+          <div class="coming-soon-text">Website Coming Soon</div>
+        </div>
+      </div>
+
+      <div class="visual-container">
+        <div class="interactive-arena" id="interactive-arena">
+          <!-- Reticle Frame holding the main Mango -->
+          <div class="hud-frame" id="hud-frame">
+            <div class="hud-reticle reticle-tl"></div>
+            <div class="hud-reticle reticle-tr"></div>
+            <div class="hud-reticle reticle-bl"></div>
+            <div class="hud-reticle reticle-br"></div>
+
+            <!-- Main Mango Element -->
+            <div class="mango-wrapper" id="mango">
+              <!-- Unripe Layer -->
+              <svg
+                class="mango-svg mango-unripe"
+                viewBox="0 0 200 250"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M110 35 C130 10, 160 15, 165 25 C160 45, 130 45, 110 35 Z"
+                  fill="#2d5a27"
+                />
+                <path
+                  d="M110 35 Q135 27 165 25"
+                  stroke="#1e3f1a"
+                  stroke-width="2"
+                />
+                <path
+                  d="M100 45 Q105 30 112 25"
+                  stroke="#4a3525"
+                  stroke-width="6"
+                  stroke-linecap="round"
+                />
+                <defs>
+                  <radialGradient id="unripeGrad" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#a3e635" />
+                    <stop offset="65%" stop-color="#4d7c0f" />
+                    <stop offset="100%" stop-color="#142304" />
+                  </radialGradient>
+                </defs>
+                <path
+                  d="M100 45 C150 45, 185 85, 175 145 C165 205, 110 235, 75 220 C40 205, 25 145, 45 95 C60 60, 80 45, 100 45 Z"
+                  fill="url(#unripeGrad)"
+                />
+              </svg>
+
+              <!-- Ripe Layer -->
+              <svg
+                class="mango-svg mango-ripe"
+                viewBox="0 0 200 250"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M110 35 C130 10, 160 15, 165 25 C160 45, 130 45, 110 35 Z"
+                  fill="#3f6212"
+                />
+                <path
+                  d="M110 35 Q135 27 165 25"
+                  stroke="#1e3f1a"
+                  stroke-width="2"
+                />
+                <path
+                  d="M100 45 Q105 30 112 25"
+                  stroke="#4a3525"
+                  stroke-width="6"
+                  stroke-linecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="ripeGrad"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stop-color="#f43f5e" />
+                    <stop offset="45%" stop-color="#eab308" />
+                    <stop offset="100%" stop-color="#ea580c" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M100 45 C150 45, 185 85, 175 145 C165 205, 110 235, 75 220 C40 205, 25 145, 45 95 C60 60, 80 45, 100 45 Z"
+                  fill="url(#ripeGrad)"
+                />
+              </svg>
+
+              <!-- Light Sheen -->
+              <svg
+                class="mango-light-layer"
+                viewBox="0 0 200 250"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <radialGradient
+                    id="lightGrad"
+                    cx="var(--light-x)"
+                    cy="var(--light-y)"
+                    r="40%"
+                  >
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8" />
+                    <stop
+                      offset="50%"
+                      stop-color="#ffffff"
+                      stop-opacity="0.15"
+                    />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+                <path
+                  d="M100 45 C150 45, 185 85, 175 145 C165 205, 110 235, 75 220 C40 205, 25 145, 45 95 C60 60, 80 45, 100 45 Z"
+                  fill="url(#lightGrad)"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Bottom Interface Section -->
+          <div class="bottom-controls">
+            <div class="basket" id="basket">
+              <svg class="basket-svg" viewBox="0 0 100 40">
+                <path
+                  class="basket-body"
+                  d="M10 5 L90 5 L80 35 C80 38, 75 40, 70 40 L30 40 C25 40, 20 38, 20 35 Z"
+                />
+                <line
+                  x1="25"
+                  y1="5"
+                  x2="32"
+                  y2="35"
+                  stroke="rgba(255,255,255,0.2)"
+                  stroke-width="1"
+                />
+                <line
+                  x1="50"
+                  y1="5"
+                  x2="50"
+                  y2="38"
+                  stroke="rgba(255,255,255,0.2)"
+                  stroke-width="1"
+                />
+                <line
+                  x1="75"
+                  y1="5"
+                  x2="68"
+                  y2="35"
+                  stroke="rgba(255,255,255,0.2)"
+                  stroke-width="1"
+                />
+                <line
+                  x1="15"
+                  y1="20"
+                  x2="85"
+                  y2="20"
+                  stroke="rgba(255,255,255,0.15)"
+                  stroke-width="1"
+                />
+                <rect
+                  x="5"
+                  y="2"
+                  width="90"
+                  height="4"
+                  rx="2"
+                  fill="rgba(255,255,255,0.5)"
+                />
+              </svg>
+            </div>
+
+            <div class="counter-container">
+              <div class="counter-display" id="catch-counter">
+                CATCHES // 0000
+              </div>
+              <div class="click-hint">Click Frame to Drop & Catch!</div>
+            </div>
+          </div>
+
+          <!-- Overlay for Drops -->
+          <div class="game-overlay" id="game-overlay"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div>Software, Design and Branding Studio</div>
+      <div>&copy; Mango Phase Studio</div>
+    </footer>
+    <script src="style.js"></script>
+  </body>
+</html>
