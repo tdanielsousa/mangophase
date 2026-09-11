@@ -7,6 +7,6 @@
     { "pattern": "www.mangophasestudio.com", "custom_domain": true }
   ],
   "assets": {
-    "directory": "."
+    "directory": "./public"
   }
 }
