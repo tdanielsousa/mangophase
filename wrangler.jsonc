@@ -7,6 +7,12 @@
     { "pattern": "www.mangophasestudio.com", "custom_domain": true }
   ],
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "exclude": [
+      ".git/**",
+      ".github/**",
+      "README.md",
+      "wrangler.jsonc"
+    ]
   }
 }
